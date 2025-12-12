@@ -1,6 +1,6 @@
 <?php
 
-namespace Auth\src\http;
+namespace Auth\src\Http;
 
 use RuntimeException;
 

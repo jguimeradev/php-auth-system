@@ -2,7 +2,7 @@
 
 require '../vendor/autoload.php';
 
-use Auth\src\http\Router;
+use Auth\src\Http\Router;
 
 $router = new Router;
 
