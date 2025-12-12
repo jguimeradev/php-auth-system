@@ -1,3 +1,5 @@
 doc
 vendor
 composer.lock
+.env.example
+.env

@@ -12,6 +12,9 @@
             "Auth\\": "./"
         }
     },
+    "config": {
+        "process-timeout": 0
+    },
     "scripts": {
         "dev" :  "php -S localhost:6969 -t public"
     },
