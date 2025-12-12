@@ -12,6 +12,9 @@
             "Auth\\": "./"
         }
     },
+    "scripts": {
+        "dev" :  "php -S localhost:6969 -t public"
+    },
     "authors": [
         {
             "name": "jguimeradev",
