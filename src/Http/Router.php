@@ -41,7 +41,7 @@ class Router
 
     public function render(string $template, array|null $params = []): void
     {
-        $path = __DIR__ . '/../views/' . $template . '.php';
+        $path = __DIR__ . '/../Views/' . $template . '.php';
 
         if (!file_exists($path)) {
             throw new RuntimeException("View not found: $path");

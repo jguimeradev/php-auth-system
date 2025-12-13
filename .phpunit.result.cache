@@ -1,1 +1,1 @@
-{"version":2,"defects":{"DatabaseConnectionTest::testDatabaseConnectionReturnsPDO":7},"times":{"DatabaseConnectionTest::testDatabaseConnectionReturnsPDO":0.001,"DatabaseConnectionTest::testConnectionisSingleton":0}}
+{"version":2,"defects":{"DatabaseConnectionTest::testDatabaseConnectionReturnsPDO":8,"DatabaseConnectionTest::testConnectionisSingleton":8},"times":{"DatabaseConnectionTest::testDatabaseConnectionReturnsPDO":0.002,"DatabaseConnectionTest::testConnectionisSingleton":0}}
