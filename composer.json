@@ -19,7 +19,8 @@
     },
     "scripts": {
         "dev" :  "php -S localhost:6969 -t public",
-        "phinx":  "./vendor/bin/phinx"
+        "phinx":  "./vendor/bin/phinx",
+        "phpunit":  "./vendor/bin/phpunit"
     },
     "authors": [
         {
