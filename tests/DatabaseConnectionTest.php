@@ -1,8 +1,12 @@
 <?php
 
-use Auth\src\Database\DBConnection;
-use PHPUnit\Framework\TestCase;
+namespace Auth\src\tests;
+
+use PDO;
 use Dotenv\Dotenv;
+use PHPUnit\Framework\TestCase;
+use Auth\src\Database\DBConnection;
+
 
 final class DatabaseConnectionTest extends TestCase
 {

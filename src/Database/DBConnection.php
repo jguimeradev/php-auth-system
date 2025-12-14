@@ -30,4 +30,10 @@ final class DBConnection
         }
         return self::$pdo;
     }
+
+    // Optional: for testing
+    public static function resetConnection(): void
+    {
+        self::$pdo = null;
+    }
 }
