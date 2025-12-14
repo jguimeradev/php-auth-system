@@ -12,6 +12,14 @@
             </div>
         </div>
     </nav>
+    <?php if (!empty($errors)): ?>
+        <div class="alert alert-danger">
+            <?php foreach ($errors as $error): ?>
+                <p><?= htmlspecialchars($error) ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
     <!-- Content -->
     <main class="container" style="padding-top:90px;">
         <section class="auth-center">
@@ -19,10 +27,10 @@
             <h3 class="mb-2">Create account</h3>
             <p class="muted small mb-4">Start your free account — all fields are client-side validated for the demo.</p>
 
-            <form id="signupForm" novalidate method="POST" action="/signup">
+            <form id="signupForm" method="POST" action="/register">
                 <div class="mb-3">
                     <label for="name" class="form-label">Full name</label>
-                    <input id="name" name="full_name" class="form-control" type="text" placeholder="Jane Doe" />
+                    <input id="name" name="name" class="form-control" type="text" placeholder="Jane Doe" />
                     <!--   <div class="invalid-feedback">Please provide your name.</div> -->
                 </div>
 

@@ -102,7 +102,7 @@
         <p class="subtitle">Secure User Management Platform</p>
 
         <div class="buttons-container">
-            <a href="login.php" class="btn btn-login btn-custom">Log In</a>
+            <a href="/login" class="btn btn-login btn-custom">Log In</a>
             <a href="/register" class="btn btn-signup btn-custom">Sign Up</a>
         </div>
     </div>

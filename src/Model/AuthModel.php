@@ -5,10 +5,13 @@ namespace Auth\src\Model;
 use PDO;
 use Auth\src\Database\DBConnection;
 
+
 class AuthModel
 {
     private array $errors = [];
     private PDO $pdo;
+
+    private string $table = "users";
 
     public function __construct(public array $args = [], ?PDO $pdo = null)
     {
@@ -20,7 +23,13 @@ class AuthModel
         return DBConnection::getConnection();
     }
 
-    public static function all() {}
+    public static function all(): array
+    {
+        $pdo = self::connectDB();
+        $res = $pdo->prepare('SELECT * FROM users');
+        $data = $res->fetchAll(PDO::FETCH_OBJ);
+        return $data;
+    }
 
     public static function findByEmail(string $email): array
     {
@@ -41,7 +50,7 @@ class AuthModel
             array_push($this->errors, "Invalid email format");
         }
 
-        if (empty($this->args['full_name'])) {
+        if (empty($this->args['name'])) {
             array_push($this->errors, "Name is required");
         }
 
@@ -68,20 +77,33 @@ class AuthModel
             return $this->errors;
         }
 
+        try {
+            $stmt = $this->pdo->prepare(
+                "INSERT INTO {$this->table} (name, email, password_hash, role, created_at)
+            VALUES (?,?,?,?,?)"
+            );
+
+            $stmt->execute([
+                $this->args['name'],
+                $this->args['email'],
+                password_hash($this->args['password'], PASSWORD_BCRYPT),
+                $this->args['role'] ?? 'User',
+                date('Y-m-d H:i:s'),
+            ]);
+
+            return [];
+        } catch (\PDOException $e) {
+            array_push($this->errors, "Database error: {$e->getMessage()}");
+        }
+
         return $this->errors;
     }
-    public function read(): void {}
-
-    public function update(): void {}
-
-    public function delete(): void {}
-
-
     public function getErrors()
     {
         return $this->errors;
     }
 
+    //for testing purposes
     public function getEmail(): string
     {
         return $this->args['email'] ?? '';
@@ -94,6 +116,12 @@ class AuthModel
 
     public function getFullName(): string
     {
-        return $this->args['full_name'] ?? '';
+        return $this->args['name'] ?? '';
     }
+
+    public function read(): void {}
+
+    public function update(): void {}
+
+    public function delete(): void {}
 }

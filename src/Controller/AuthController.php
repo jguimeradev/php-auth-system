@@ -9,13 +9,20 @@ class AuthController
 {
     public function index(Router $router): void
     {
-        $router->render('signup', null);
+        $router->render('register', null);
     }
 
-    public function register(Router $router): void
+    public function save(Router $router): void
     {
         if (isset($_POST)) {
             $user = new AuthModel($_POST);
+            $errors = $user->create();
+            if (empty($errors)) {
+                $res = AuthModel::all();
+                $router->render('admin', ['data' => $res]);
+            } else {
+                $router->render('register', ['errors' => $errors]);
+            }
         }
     }
 }

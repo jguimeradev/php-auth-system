@@ -3,11 +3,13 @@
 namespace Auth\src\tests;
 
 use PDO;
+use PDOStatement;
 use Auth\src\Model\AuthModel;
 use PHPUnit\Framework\TestCase;
 
 final class AuthModelTest extends TestCase
 {
+    //TODO: #4 Validation tests
     private PDO $stubPDO;
 
     protected function setUp(): void
@@ -17,6 +19,10 @@ final class AuthModelTest extends TestCase
         $this->stubPDO = $this->createStub(PDO::class);
     }
 
+    /**
+     * Test 1: Constructor stores user data correctly 
+     * 
+     * **/
     public function testConstructorStoresUserData(): void
     {
         $userData = [
@@ -32,6 +38,10 @@ final class AuthModelTest extends TestCase
         $this->assertSame('John Smith', $user->getFullName());
     }
 
+    /**
+     * Test 2: Invalid Email Format 
+     * 
+     */
     public function testValidateFailsWithInvalidEmailFormat(): void
     {
         $userData = [
@@ -45,4 +55,8 @@ final class AuthModelTest extends TestCase
         $this->assertFalse($user->validate());
         $this->assertContains('Invalid email format', $user->getErrors());
     }
+
+    /**
+     * Test 3: Insert users
+     */
 }
