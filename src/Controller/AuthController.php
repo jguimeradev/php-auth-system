@@ -18,11 +18,17 @@ class AuthController
             $user = new AuthModel($_POST);
             $errors = $user->create();
             if (empty($errors)) {
-                $res = AuthModel::all();
-                $router->render('admin', ['data' => $res]);
+                $data = AuthModel::all();
+                $router->render('admin', ['data' => $data]);
             } else {
                 $router->render('register', ['errors' => $errors]);
             }
         }
+    }
+
+    public function show(Router $router): void
+    {
+        $users = AuthModel::all();
+        $router->render('admin', ['data' => $users]);
     }
 }

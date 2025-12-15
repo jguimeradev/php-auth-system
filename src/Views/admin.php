@@ -65,20 +65,24 @@
                                     <th>Full name</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th>Created at</th>
                                     <th style="width:180px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>id</td>
-                                    <td>full_name</td>
-                                    <td>email</td>
-                                    <td>role</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary editBtn">Edit</button>
-                                        <button class="btn btn-sm btn-outline-danger deleteBtn">Delete</button>
-                                    </td>
-                                </tr>
+                                <?php foreach ($data as $row): ?>
+                                    <tr>
+                                        <td><?= $row->id ?></td>
+                                        <td><?= $row->name ?></td>
+                                        <td><?= $row->email ?></td>
+                                        <td><?= $row->role ?></td>
+                                        <td><?= $row->created_at ?></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary editBtn">Edit</button>
+                                            <button class="btn btn-sm btn-outline-danger deleteBtn">Delete</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>

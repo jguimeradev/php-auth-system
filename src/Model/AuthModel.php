@@ -27,6 +27,7 @@ class AuthModel
     {
         $pdo = self::connectDB();
         $res = $pdo->prepare('SELECT * FROM users');
+        $res->execute();
         $data = $res->fetchAll(PDO::FETCH_OBJ);
         return $data;
     }
