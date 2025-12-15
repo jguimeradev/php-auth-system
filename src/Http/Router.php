@@ -39,6 +39,13 @@ class Router
         }
     }
 
+
+    public function redirect(string $path): void
+    {
+        header("Location: $path");
+        exit;
+    }
+
     public function render(string $template, array|null $params = []): void
     {
         $path = __DIR__ . '/../Views/' . $template . '.php';

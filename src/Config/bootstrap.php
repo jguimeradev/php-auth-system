@@ -2,6 +2,9 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 #dotenv path. Immutable does not allow to change $_ENV values
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../..');

@@ -120,6 +120,16 @@ class AuthModel
         return $this->args['name'] ?? '';
     }
 
+    public function getRole(): string
+    {
+        return $this->args['role'] ?? 'User';
+    }
+
+    public function getCreatedAt(): string
+    {
+        return date('Y-m-d H:i:s');
+    }
+
     public function read(): void {}
 
     public function update(): void {}

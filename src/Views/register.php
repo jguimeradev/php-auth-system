@@ -27,7 +27,7 @@
             <h3 class="mb-2">Create account</h3>
             <p class="muted small mb-4">Start your free account — all fields are client-side validated for the demo.</p>
 
-            <form id="signupForm" method="POST" action="/register">
+            <form id="signupForm" method="POST">
                 <div class="mb-3">
                     <label for="name" class="form-label">Full name</label>
                     <input id="name" name="name" class="form-control" type="text" placeholder="Jane Doe" />

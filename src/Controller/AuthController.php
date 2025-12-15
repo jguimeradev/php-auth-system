@@ -14,16 +14,28 @@ class AuthController
 
     public function save(Router $router): void
     {
-        if (isset($_POST)) {
-            $user = new AuthModel($_POST);
-            $errors = $user->create();
-            if (empty($errors)) {
-                $data = AuthModel::all();
-                $router->render('admin', ['data' => $data]);
-            } else {
-                $router->render('register', ['errors' => $errors]);
-            }
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return;
         }
+
+        $user = new AuthModel($_POST);
+        $errors = $user->create();
+        if (empty($errors)) {
+            $_SESSION['profile'] = [
+                'email' => $user->getEmail(),
+                'name' => $user->getFullName(),
+                'role' => $user->getRole(),
+                'created_at' => $user->getCreatedAt(),
+            ];
+            $router->redirect('/profile');
+        } else {
+            $router->render('register', ['errors' => $errors]);
+        }
+    }
+
+    public function profile(Router $router): void
+    {
+        $router->render('profile', ['data' => $_SESSION['profile'] ?? null]);
     }
 
     public function show(Router $router): void
