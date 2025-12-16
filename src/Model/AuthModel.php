@@ -43,6 +43,8 @@ class AuthModel
     }
 
 
+
+
     public function validate(): bool
     {
         if (empty($this->args['email'])) {
@@ -79,6 +81,7 @@ class AuthModel
         }
 
         try {
+            $this->pdo = self::connectDB();
             $stmt = $this->pdo->prepare(
                 "INSERT INTO {$this->table} (name, email, password_hash, role, created_at)
             VALUES (?,?,?,?,?)"
@@ -95,6 +98,29 @@ class AuthModel
             return [];
         } catch (\PDOException $e) {
             array_push($this->errors, "Database error: {$e->getMessage()}");
+        }
+
+        return $this->errors;
+    }
+
+
+
+    public function authenticate(): array
+    {
+
+        $this->pdo = self::connectDB();
+        $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = ?');
+        $stmt->execute([$this->args['email']]);
+        $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        if (empty($data)) {
+            array_push($this->errors, "Email or password incorrect");
+            return $this->errors;
+        }
+
+        if (!password_verify($this->args['password'], $data[0]->password_hash)) {
+            array_push($this->errors, "Email or password incorrect");
+            return $this->errors;
         }
 
         return $this->errors;

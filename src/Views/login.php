@@ -12,7 +12,13 @@
             </div>
         </div>
     </nav>
-
+    <?php if (!empty($errors)): ?>
+        <div class="alert alert-danger">
+            <?php foreach ($errors as $error): ?>
+                <p><?= htmlspecialchars($error) ?></p>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
     <!-- Content -->
     <main class="container" style="padding-top:90px;">
         <section class="auth-center">
@@ -20,7 +26,7 @@
             <h3 class="mb-2">Log in</h3>
             <p class="muted small mb-4">Access your account using email and password.</p>
 
-            <form id="loginForm" method="POST" action="/login">
+            <form id="loginForm" method="POST">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input id="email" name="email" class="form-control" type="email" placeholder="you@example.com" />
