@@ -5,7 +5,7 @@ namespace Auth\src\Model;
 use PDO;
 use Auth\src\Database\DBConnection;
 
-
+//TODO: find a way to sync model data with database, as well as model data with args from constructor a.k.a $_POST.
 class AuthModel
 {
     private array $errors = [];
@@ -38,7 +38,7 @@ class AuthModel
         $pdo = self::connectDB();
         $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
         $stmt->execute([$email]);
-        $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+        $data = $stmt->fetch(PDO::FETCH_OBJ);
         return $data;
     }
 
@@ -111,20 +111,22 @@ class AuthModel
         $this->pdo = self::connectDB();
         $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = ?');
         $stmt->execute([$this->args['email']]);
-        $data = $stmt->fetchAll(PDO::FETCH_OBJ);
-
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
         if (empty($data)) {
             array_push($this->errors, "Email or password incorrect");
             return $this->errors;
         }
 
-        if (!password_verify($this->args['password'], $data[0]->password_hash)) {
+        if (!password_verify($this->args['password'], $data['password_hash'])) {
             array_push($this->errors, "Email or password incorrect");
             return $this->errors;
         }
 
+
+
         return $this->errors;
     }
+
     public function getErrors()
     {
         return $this->errors;

@@ -1,4 +1,7 @@
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/header.php';
+
+var_dump($_SESSION['profile']) or die;
+?>
 
 <body>
 
@@ -8,7 +11,7 @@
             <a class="navbar-brand text-accent" href="index">Acme Identity</a>
 
             <div class="d-flex align-items-center gap-2">
-                <span class="muted small">Welcome, <?php echo htmlspecialchars($data['name'] ?? 'User'); ?></span>
+                <span class="muted small">Welcome, <?php echo htmlspecialchars($_SESSION['profile']['name'] ?? 'User'); ?></span>
                 <a href="logout" class="btn btn-outline-primary btn-sm">Log out</a>
                 <button class="btn btn-sm theme-toggle" id="themeToggle">Toggle Theme</button>
             </div>
@@ -60,13 +63,13 @@
                         <div class="col-md-6 mb-4">
                             <div class="mb-3">
                                 <label class="form-label text-muted small">Full Name</label>
-                                <p class="mb-0 fw-500"><?php echo htmlspecialchars($data['name'] ?? 'N/A'); ?></p>
+                                <p class="mb-0 fw-500"><?php echo htmlspecialchars($_SESSION['profile']['name'] ?? 'N/A'); ?></p>
                             </div>
                         </div>
                         <div class="col-md-6 mb-4">
                             <div class="mb-3">
                                 <label class="form-label text-muted small">Email Address</label>
-                                <p class="mb-0 fw-500"><?php echo htmlspecialchars($data['email'] ?? 'N/A'); ?></p>
+                                <p class="mb-0 fw-500"><?php echo htmlspecialchars($_SESSION['profile']['email'] ?? 'N/A'); ?></p>
                             </div>
                         </div>
                     </div>
@@ -77,7 +80,7 @@
                                 <label class="form-label text-muted small">Role</label>
                                 <p class="mb-0">
                                     <span class="badge" style="background-color: var(--accent); color: white;">
-                                        <?php echo htmlspecialchars($data['role'] ?? 'User'); ?>
+                                        <?php echo htmlspecialchars($_SESSION['profile']['role'] ?? 'User'); ?>
                                     </span>
                                 </p>
                             </div>
@@ -87,8 +90,8 @@
                                 <label class="form-label text-muted small">Member Since</label>
                                 <p class="mb-0 fw-500">
                                     <?php
-                                    if (isset($data['created_at'])) {
-                                        echo date('F d, Y', strtotime($data['created_at']));
+                                    if (isset($_SESSION['profile']['created_at'])) {
+                                        echo date('F d, Y', strtotime($_SESSION['profile']['created_at']));
                                     } else {
                                         echo 'N/A';
                                     }
@@ -146,8 +149,8 @@
                             <tr>
                                 <td>Account created</td>
                                 <td><?php
-                                    if (isset($data['created_at'])) {
-                                        echo date('M d, Y H:i', strtotime($data['created_at']));
+                                    if (isset($_SESSION['profile']['created_at'])) {
+                                        echo date('M d, Y H:i', strtotime($_SESSION['profile']['created_at']));
                                     } else {
                                         echo 'N/A';
                                     }
