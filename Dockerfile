@@ -13,19 +13,11 @@ FROM composer:lts AS deps
 
 WORKDIR /app
 
-# If your composer.json file defines scripts that run during dependency installation and
-# reference your application source files, uncomment the line below to copy all the files
-# into this layer.
-# COPY . .
+# Copy only composer files to leverage Docker layer caching
+COPY composer.json composer.lock* /app/
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a bind mounts to composer.json and composer.lock to avoid having to copy them
-# into this layer.
-# Leverage a cache mount to /tmp/cache so that subsequent builds don't have to re-download packages.
-RUN --mount=type=bind,source=composer.json,target=composer.json \
-    --mount=type=bind,source=composer.lock,target=composer.lock \
-    --mount=type=cache,target=/tmp/cache \
-    composer install --no-dev --no-interaction
+# Install runtime dependencies (no-dev) in deps stage
+RUN composer install --no-interaction --prefer-dist 
 
 ################################################################################
 
@@ -70,9 +62,15 @@ FROM php:8.4.16-apache AS final
 # https://github.com/docker-library/docs/tree/master/php#configuration
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
+# Install PHP extensions required by the app (PDO MySQL) and utilities
+RUN apt-get update && apt-get install -y libzip-dev unzip \
+    && docker-php-ext-install pdo_mysql \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy the app dependencies from the previous install stage.
-COPY --from=deps app/vendor/ /var/www/html/vendor
-# Copy the app files from the app directory.
+# Copy the app dependencies from the previous install stage.
+COPY --from=deps /app/vendor/ /var/www/html/vendor
+# Copy the app files from the project into the web root.
 COPY . /var/www/html
 
 # OTHERS
@@ -82,7 +80,7 @@ RUN a2enmod rewrite
 
 COPY apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# Switch to a non-privileged user (defined in the base image) that the app will run under.
-# See https://docs.docker.com/go/dockerfile-user-best-practices/
-# USER www-data
-USER root
+# Ensure correct permissions for the web server user
+RUN chown -R www-data:www-data /var/www/html
+
+# Keep default user (root) so apache can start as configured in base image.

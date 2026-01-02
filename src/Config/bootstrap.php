@@ -8,9 +8,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 #dotenv path. Immutable does not allow to change $_ENV values
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../..');
-$dotenv->load();
+$dotenv->safeLoad();
 
-$debug = filter_var($_ENV['APP_DEBUG'], FILTER_VALIDATE_BOOL);
+$debug = filter_var($_ENV['APP_DEBUG'] ?? '0', FILTER_VALIDATE_BOOL);
 
 if ($debug) {
     ini_set('display_errors', 1);
