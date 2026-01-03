@@ -1,7 +1,4 @@
-<?php include 'includes/header.php';
-
-var_dump($_SESSION['profile']) or die;
-?>
+<?php include 'includes/header.php'; ?>
 
 <body>
 

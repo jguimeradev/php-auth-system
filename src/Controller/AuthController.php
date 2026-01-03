@@ -42,11 +42,13 @@ class AuthController
         $user = new AuthModel($_POST);
         $errors = $user->authenticate();
         if (empty($errors)) {
+            $user = $user->getLoginData();
+
             $_SESSION['profile'] = [
-                'email' => $user->getEmail(),
-                'name' => $user->getFullName(),
-                'role' => $user->getRole(),
-                'created_at' => $user->getCreatedAt(),
+                'email' => $user['email'],
+                'name' => $user['name'],
+                'role' => $user['role'],
+                'created_at' => $user['created_at'],
             ];
             $router->redirect('/profile');
             exit;

@@ -13,6 +13,8 @@ class AuthModel
 
     private string $table = "users";
 
+    private array $login = [];
+
     public function __construct(public array $args = [], ?PDO $pdo = null)
     {
         $this->pdo = $pdo ?? self::connectDB();
@@ -104,20 +106,20 @@ class AuthModel
     }
 
 
-
     public function authenticate(): array
     {
 
         $this->pdo = self::connectDB();
         $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = ?');
         $stmt->execute([$this->args['email']]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (empty($data)) {
+        $this->login = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($this->login)) {
             array_push($this->errors, "Email or password incorrect");
             return $this->errors;
         }
 
-        if (!password_verify($this->args['password'], $data['password_hash'])) {
+        if (!password_verify($this->args['password'], $this->login['password_hash'])) {
             array_push($this->errors, "Email or password incorrect");
             return $this->errors;
         }
@@ -127,6 +129,10 @@ class AuthModel
         return $this->errors;
     }
 
+    public function getLoginData(): array
+    {
+        return $this->login;
+    }
     public function getErrors()
     {
         return $this->errors;
