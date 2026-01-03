@@ -34,7 +34,7 @@ class AuthModel
         return $data;
     }
 
-    public static function findByEmail(string $email): array
+    public static function findByEmail(string $email): mixed //array or false
     {
 
         $pdo = self::connectDB();
