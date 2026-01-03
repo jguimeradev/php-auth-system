@@ -15,5 +15,9 @@ $router->get('/login', fn() => $router->render('login', null));
 $router->post('/login', [new AuthController, 'login']);
 
 $router->get('/profile', [new AuthController, 'profile']);
-$router->get('/admin', [new AuthController, 'show']);
+
+if (isset($_SESSION['profile']) && $_SESSION['profile']['name'] === 'admin') {
+    $router->get('/admin', [new AuthController, 'show']);
+}
+
 $router->dispatch();

@@ -1,4 +1,4 @@
-<?php include 'includes/header.php'; ?>
+<?php include dirname(__DIR__) . '/includes/header.php'; ?>
 
 
 <body>
@@ -154,4 +154,4 @@
         </div>
     </div>
 
-    <?php include 'includes/footer.php'; ?>
+    <?php include dirname(__DIR__) . '/includes/footer.php'; ?>

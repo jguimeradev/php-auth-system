@@ -26,7 +26,7 @@
 
                 <nav>
                     <a href="profile" class="active">Profile</a>
-                    <a href="dashboard">Dashboard</a>
+                    <a href="admin/admin">Dashboard</a>
                     <a href="settings">Settings</a>
                     <a href="help">Help & Support</a>
                 </nav>

@@ -50,6 +50,11 @@ class AuthController
                 'role' => $user['role'],
                 'created_at' => $user['created_at'],
             ];
+
+            if ($_SESSION['profile']['name'] === 'admin') {
+                $router->redirect('/admin');
+            }
+
             $router->redirect('/profile');
             exit;
         } else {
@@ -66,6 +71,6 @@ class AuthController
     public function show(Router $router): void
     {
         $users = AuthModel::all();
-        $router->render('admin', ['data' => $users]);
+        $router->render('admin/admin', ['data' => $users]);
     }
 }
