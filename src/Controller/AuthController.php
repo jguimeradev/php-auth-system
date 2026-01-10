@@ -73,4 +73,12 @@ class AuthController
         $users = AuthModel::all();
         $router->render('admin/admin', ['data' => $users]);
     }
+
+    public function edit(Router $router): void
+    {
+        var_dump($_SERVER['REQUEST_METHOD']);
+        $router->render('admin/edit');
+    }
+
+    public function delete(Router $router): void {}
 }

@@ -78,8 +78,11 @@
                                         <td><?= $row->role ?></td>
                                         <td><?= $row->created_at ?></td>
                                         <td>
-                                            <button class="btn btn-sm btn-outline-primary editBtn">Edit</button>
-                                            <button class="btn btn-sm btn-outline-danger deleteBtn">Delete</button>
+                                            <a href="/admin/edit?id=<?= hash("md5", $row->id); ?>" class="btn btn-sm btn-outline-primary editBtn">Edit</a>
+                                            <form action="/admin/delete" method="POST" class="d-inline" onsubmit="return confirm('Delete this user?');">
+                                                <input type="hidden" name="id" value="<?= hash("md5", $row->id); ?>">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger deleteBtn">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -135,21 +138,6 @@
                         <button type="submit" class="btn btn-primary" id="modalSaveBtn">Save</button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Confirm Delete Modal -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <p class="mb-0">Delete this user?</p>
-                    <div class="d-flex justify-content-end gap-2 mt-3">
-                        <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
-                        <button class="btn btn-danger btn-sm" id="confirmDeleteBtn">Delete</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

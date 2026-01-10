@@ -18,6 +18,7 @@ $router->get('/profile', [new AuthController, 'profile']);
 
 if (isset($_SESSION['profile']) && $_SESSION['profile']['name'] === 'admin') {
     $router->get('/admin', [new AuthController, 'show']);
+    $router->get('/admin/edit', [new AuthController, 'edit']);
 }
 
 $router->dispatch();
