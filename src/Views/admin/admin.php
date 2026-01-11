@@ -78,9 +78,9 @@
                                         <td><?= $row->role ?></td>
                                         <td><?= $row->created_at ?></td>
                                         <td>
-                                            <a href="/admin/edit?id=<?= hash("md5", $row->id); ?>" class="btn btn-sm btn-outline-primary editBtn">Edit</a>
+                                            <a href="/admin/edit?id=<?= $row->id; ?>" class="btn btn-sm btn-outline-primary editBtn">Edit</a>
                                             <form action="/admin/delete" method="POST" class="d-inline" onsubmit="return confirm('Delete this user?');">
-                                                <input type="hidden" name="id" value="<?= hash("md5", $row->id); ?>">
+                                                <input type="hidden" name="id" value="<?= $row->id; ?>">
                                                 <button type="submit" class="btn btn-sm btn-outline-danger deleteBtn">Delete</button>
                                             </form>
                                         </td>

@@ -3,6 +3,7 @@
 namespace Auth\src\Model;
 
 use PDO;
+use Exception;
 use Auth\src\Database\DBConnection;
 
 //TODO: find a way to sync model data with database, as well as model data with args from constructor a.k.a $_POST.
@@ -45,7 +46,15 @@ class AuthModel
     }
 
 
+    public static function findById(string $id): mixed //array or false
+    {
 
+        $pdo = self::connectDB();
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
+        $stmt->execute([$id]);
+        $data = $stmt->fetch(PDO::FETCH_OBJ);
+        return $data;
+    }
 
     public function validate(): bool
     {
@@ -129,6 +138,24 @@ class AuthModel
         return $this->errors;
     }
 
+    public function read(): void {}
+
+    public function id(string $id)
+    {
+        $data = $this->findById($id);
+
+        if (!$data) {
+            throw new Exception("Error finding the user to edit");
+        }
+
+        return $data;
+    }
+
+    public function delete(): void {}
+
+
+
+
     public function getLoginData(): array
     {
         return $this->login;
@@ -163,10 +190,4 @@ class AuthModel
     {
         return date('Y-m-d H:i:s');
     }
-
-    public function read(): void {}
-
-    public function update(): void {}
-
-    public function delete(): void {}
 }

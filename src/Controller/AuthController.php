@@ -76,9 +76,20 @@ class AuthController
 
     public function edit(Router $router): void
     {
-        var_dump($_SERVER['REQUEST_METHOD']);
-        $router->render('admin/edit');
+        //TODO: no me convence la manera de gestionar el id
+
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+            $id = $_GET['id'];
+            $user = new AuthModel();
+            $data = $user->id($id);
+            $router->render('admin/edit', ['data' => $data]);
+        } else {
+            echo "editing user";
+        }
     }
+
+
 
     public function delete(Router $router): void {}
 }
